@@ -1,14 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import { Layout, Menu, theme } from 'antd';
+import Login from "./components/Login";
 
 const { Header, Content, Footer } = Layout;
 
 
 function App() {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   return <Layout>
     <Header
       style={{
@@ -35,6 +33,7 @@ function App() {
       
         <Routes>
           <Route path="/register" Component={SignUp} />
+          <Route path="/login" Component={Login}/>
         </Routes>
     </Content>
     <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>
