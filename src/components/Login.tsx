@@ -2,26 +2,38 @@ import { Button, Form, Input, Result, message } from 'antd';
 import showError from '../utils/showError';
 import Api from '../utils/Api';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../store';
+import { LoginForm } from '../types/user';
+import { login } from '../store/actions/userActions';
+import { useEffect } from 'react';
+import showSuccess from '../utils/showSuccess';
 
 
 const Login = () => {
     const [messageApi, contextHolder] = message.useMessage();
-
     const navigate = useNavigate()
     const location = useLocation()
-    const onFinish = async (values: any) => {
-        console.log('Success:', values);
-        try {
-            await Api.post("/users/login", values)
+    const dispatch = useDispatch<any>()
+    const { data, loading, error } = useSelector((state: AppState) => state.user)
+
+    const onFinish = (values: LoginForm) => {
+        dispatch(login(values))
+    }
+
+    useEffect(() => { error && showError(messageApi, error) })
+
+    useEffect(() => {
+        data.username && showSuccess(messageApi, "You have successfully logged in!")
+    },[data.username])
+
+    useEffect(()=>{
+        const token = localStorage.getItem("token")
+        if(token){
             navigate("/")
         }
-        catch (error) { console.log(error) }
-    };
+    },[data])
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-        showError(messageApi, errorInfo)
-    };
     return (
         <>
             {contextHolder}
@@ -32,7 +44,7 @@ const Login = () => {
                 style={{ maxWidth: 600 }}
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
+                // onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <h2 style={{ textAlign: "center", marginBottom: "40" }}>
