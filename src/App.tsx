@@ -5,33 +5,15 @@ import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Category from "./components/Category";
 import Record from "./components/Record";
+import AppHeader from "./components/AppHeader";
+import Logout from "./components/Logout";
 
 const { Header, Content, Footer } = Layout;
 
 
 function App() {
   return <Layout>
-    <Header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1,
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={['2']}
-        items={new Array(3).fill(null).map((_, index) => ({
-          key: String(index + 1),
-          label: `nav ${index + 1}`,
-        }))}
-      />
-    </Header>
+    <AppHeader/>
     <Content className="site-layout" style={{ padding: '50px' }}>
 
       <Routes>
@@ -47,6 +29,7 @@ function App() {
             <Record />
           </PrivateRoute>
         } />
+        <Route path="/logout" element={<Logout/>}/>
       </Routes>
     </Content>
     <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>
