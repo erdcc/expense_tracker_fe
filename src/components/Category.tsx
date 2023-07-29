@@ -7,8 +7,7 @@ import { addCategory, deleteCategory, getCategories, updateCategory } from '../s
 import { AppState } from '../store';
 import { SketchPicker } from 'react-color';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
-
-type Mode = "new" | "edit" | "delete"
+import { Mode } from '../types/general';
 
 const emptyForm: CategoryForm = {
   name: "",
@@ -110,8 +109,8 @@ const Category = () => {
                   value={form.type}
                   onChange={(type: CategoryForm["type"]) => setForm({ ...form, type })}
                 >
-                  <Select.Option value="income">Income</Select.Option>
-                  <Select.Option value="expense">Expense</Select.Option>
+                  <Select.Option  value="income">Income</Select.Option>
+                  <Select.Option  value="expense">Expense</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Color">

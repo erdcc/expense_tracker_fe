@@ -4,6 +4,7 @@ import { Layout, Menu, theme } from 'antd';
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Category from "./components/Category";
+import Record from "./components/Record";
 
 const { Header, Content, Footer } = Layout;
 
@@ -40,7 +41,11 @@ function App() {
           <PrivateRoute>
             <Category />
           </PrivateRoute>
-
+        } />
+        <Route path="/records" element={
+          <PrivateRoute>
+            <Record />
+          </PrivateRoute>
         } />
       </Routes>
     </Content>
