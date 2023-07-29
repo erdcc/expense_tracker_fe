@@ -22,10 +22,10 @@ export const addRecord = (form:RecordForm)=> async(dispatch:RecordDispatch)=>{
     }
 }
 
-export const updateRecord = (form:Partial<RecordForm>,recordId:number)=> async(dispatch:RecordDispatch)=>{
+export const updateRecord = (form:Partial<RecordForm>,recordId:RecordType["id"])=> async(dispatch:RecordDispatch)=>{
     dispatch({type:"UPDATE_RECORD_START"})
     try{
-        const response=await Api.put<RecordType>("/records/"+recordId,form)
+        const response=await Api.put<RecordType>("/records/"+recordId, form)
         dispatch({type:"UPDATE_RECORD_SUCCESS",payload: response.data})
     }catch{
         dispatch({type:"UPDATE_RECORD_ERROR"})

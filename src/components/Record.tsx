@@ -82,13 +82,16 @@ const Record = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (text: string, record: RecordType) => (
+            render: (text: string, record: RecordType) => {
+                const {title,amount}=record
+                const category_id=record.category.id 
+                return(
                 <Space size="middle">
                     <EditFilled style={{ color: "#0077ff" }}
                         onClick={() => {
                             showModal("edit")
-                            // setForm(record)
-                            // setUpdateId(record.id)
+                            setForm({title,amount,category_id})
+                            setUpdateId(record.id)
                         }} />
                     <DeleteFilled style={{ color: "#c90000" }}
                         onClick={() => {
@@ -97,7 +100,7 @@ const Record = () => {
                         }
                         } />
                 </Space>
-            ),
+            )},
         },
     ];
     const dispatch = useDispatch<any>()

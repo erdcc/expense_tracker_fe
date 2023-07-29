@@ -1,4 +1,3 @@
-import { act } from "@testing-library/react";
 import { User, UserAction, UserState } from "../../types/user";
 
 const defaultState: UserState={
