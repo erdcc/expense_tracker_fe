@@ -9,7 +9,6 @@ import { addRecord, deleteRecord, getRecords, updateRecord } from "../store/acti
 import { CategoryType } from "../types/category"
 import { Mode } from "../types/general"
 import { getCategories } from "../store/actions/categoryActions"
-import { render } from "@testing-library/react"
 
 
 const emptyForm: RecordForm = {
@@ -19,7 +18,7 @@ const emptyForm: RecordForm = {
 }
 
 const Record = () => {
-    const { data, loading, error } = useSelector((state: AppState) => state.records)
+    const { data, loading } = useSelector((state: AppState) => state.records)
     const { data: categories } = useSelector((state: AppState) => state.categories)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mode, setMode] = useState<Mode>("new");
@@ -31,12 +30,12 @@ const Record = () => {
         setMode(mode)
     };
     const handleOk = () => {
-        if (mode === "new") dispatch(addRecord(form))
+        if (mode === "new") 
+            dispatch(addRecord(form))
         else if (mode === "edit" && typeof updateId === "number")
             dispatch(updateRecord(form, updateId))
         else if (mode === "delete" && typeof deleteId === "number")
             dispatch(deleteRecord(deleteId))
-        dispatch(addRecord(form))
         setIsModalOpen(false);
         setMode("new")
         setForm(emptyForm)
@@ -107,7 +106,7 @@ const Record = () => {
     useEffect(() => {
         dispatch(getRecords())
         !categories.length && dispatch(getCategories())
-    }, [])
+    }, [dispatch,categories])
 
     const isFormValid = !(!form.title || form.amount === 0 || form.category_id === 0)
     return (<>

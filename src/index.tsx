@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
-//import 'antd/dist/antd.css';
 import rootReducer from './store';
+import "antd/dist/reset.css";
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Provider store={store}>
+  <Provider store={store} >
     <Router>
-      <App />
+      <App  />
     </Router>
 
   </Provider>

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
-import { Layout, Menu, theme } from 'antd';
+import { Layout } from 'antd';
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Category from "./components/Category";
@@ -8,12 +8,12 @@ import Record from "./components/Record";
 import AppHeader from "./components/AppHeader";
 import Logout from "./components/Logout";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 
 function App() {
-  return <Layout>
-    <AppHeader/>
+  return <Layout className="layout" >
+    <AppHeader />
     <Content className="site-layout" style={{ padding: '50px' }}>
 
       <Routes>
@@ -29,7 +29,7 @@ function App() {
             <Record />
           </PrivateRoute>
         } />
-        <Route path="/logout" element={<Logout/>}/>
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </Content>
     <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>

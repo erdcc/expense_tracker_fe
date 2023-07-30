@@ -16,7 +16,7 @@ const emptyForm: CategoryForm = {
 }
 
 const Category = () => {
-  const { data, loading, error } = useSelector((state: AppState) => state.categories)
+  const { data, loading } = useSelector((state: AppState) => state.categories)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mode, setMode] = useState<Mode>("new");
@@ -35,7 +35,6 @@ const Category = () => {
       dispatch(updateCategory(form, updateId))
     else if(mode==="delete" && typeof deleteId ==="number")
       dispatch(deleteCategory(deleteId))
-    dispatch(addCategory(form))
     setIsModalOpen(false);
     setMode("new")
     setForm(emptyForm)
@@ -87,13 +86,19 @@ const Category = () => {
   const dispatch = useDispatch<any>()
   useEffect(() => {
     dispatch(getCategories())
-  }, [])
+  }, [dispatch])
   return (
     <>
       <div>
-        <Button type="primary" onClick={() => showModal("new")}>
-          New Category
-        </Button>
+      <div style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: "10px"
+            }}>
+                <Button type="primary" onClick={() => showModal("new")}>
+                    New Record
+                </Button>
+            </div>
         <Modal title={mode === "new" ? "Create New Category" : mode==="edit"?"Update Category":"Delete Category"} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okButtonProps={{ disabled: !(mode==="delete")&&!form.name }}>
           {mode === "edit" || mode==="new" ?
             <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
