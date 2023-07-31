@@ -18,7 +18,7 @@ const AppHeader = () => {
 
   const { pathname } = useLocation()
   return (
-    <Header style={{ display: 'flex', alignItems: 'center' }}>
+    <Header style={{ display: 'flex', alignItems: "center" }}>
       <Link to="/">
         <HomeTwoTone style={{ fontSize: '250%', margin:"20px"}} />
       </Link>
