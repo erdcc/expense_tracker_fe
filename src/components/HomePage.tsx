@@ -60,8 +60,8 @@ const HomePage = () => {
       justifyContent: "space-around",
       marginBottom: "10px"
     }}>
-      <Pie {...config} data={dataExpense} statistic={{content:{content:"EXPENSE"}}} loading={loading} />
-      <Pie {...config} data={dataIncome} statistic={{content:{content:"INCOME"}}}loading={loading} /></div>
+      <Pie {...config} data={dataExpense.length?dataExpense:[{type:"", value:0}]} statistic={{content:{content:"EXPENSE"}}} loading={loading} />
+      <Pie {...config} data={dataIncome.length?dataIncome:[{type:"", value:0}]} statistic={{content:{content:"INCOME"}}}loading={loading} /></div>
 
   )
 }
