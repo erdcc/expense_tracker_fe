@@ -7,33 +7,47 @@ import Category from "./components/Category";
 import Record from "./components/Record";
 import AppHeader from "./components/AppHeader";
 import Logout from "./components/Logout";
+import HomePage from "./components/HomePage";
 
 const { Content, Footer } = Layout;
 
 
-function App() {
-  return <Layout className="layout" >
-    <AppHeader />
-    <Content className="site-layout" style={{ padding: '50px' }}>
 
-      <Routes>
-        <Route path="/register" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/categories" element={
-          <PrivateRoute>
-            <Category />
-          </PrivateRoute>
-        } />
-        <Route path="/records" element={
-          <PrivateRoute>
-            <Record />
-          </PrivateRoute>
-        } />
-        <Route path="/logout" element={<Logout />} />
-      </Routes>
-    </Content>
-    <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>
-  </Layout>
+
+function App() {
+
+  return (
+
+    <Layout className="layout" >
+      <AppHeader />
+      <Content className="site-layout" style={{ padding: '50px' }}>
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/categories" element={
+            <PrivateRoute>
+              <Category />
+            </PrivateRoute>
+          } />
+          <Route path="/records" element={
+            <PrivateRoute>
+              <Record />
+            </PrivateRoute>
+          } />
+          <Route path="/logout" element={
+            <PrivateRoute>
+              <Logout />
+            </PrivateRoute>
+          } />
+          {/* <Route path="/logout" element={<Logout />} /> */}
+        </Routes>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>
+    </Layout>
+
+  )
 }
 
 export default App;

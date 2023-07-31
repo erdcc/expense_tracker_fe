@@ -30,7 +30,7 @@ const Record = () => {
         setMode(mode)
     };
     const handleOk = () => {
-        if (mode === "new") 
+        if (mode === "new")
             dispatch(addRecord(form))
         else if (mode === "edit" && typeof updateId === "number")
             dispatch(updateRecord(form, updateId))
@@ -69,44 +69,45 @@ const Record = () => {
             render: (category: CategoryType, record: RecordType) => {
                 return <Tag color={category.color}>{category.name.toUpperCase()}</Tag>
             }
-        },{
-            title:"Last Update",
-            dataIndex:"updatedAt",
-            key:"updatedAt",
-            render:(updatedAt:string,record:RecordType)=>{
-                return<>{new Date(updatedAt).toLocaleDateString()}{" "}
-                {new Date(updatedAt).toLocaleTimeString("tr-TR",{timeStyle:"short"})}</>
+        }, {
+            title: "Last Update",
+            dataIndex: "updatedAt",
+            key: "updatedAt",
+            render: (updatedAt: string, record: RecordType) => {
+                return <>{new Date(updatedAt).toLocaleDateString()}{" "}
+                    {new Date(updatedAt).toLocaleTimeString("tr-TR", { timeStyle: "short" })}</>
             }
         },
         {
             title: 'Action',
             key: 'action',
             render: (text: string, record: RecordType) => {
-                const {title,amount}=record
-                const category_id=record.category.id 
-                return(
-                <Space size="middle">
-                    <EditFilled style={{ color: "#0077ff" }}
-                        onClick={() => {
-                            showModal("edit")
-                            setForm({title,amount,category_id})
-                            setUpdateId(record.id)
-                        }} />
-                    <DeleteFilled style={{ color: "#c90000" }}
-                        onClick={() => {
-                            showModal("delete")
-                            setDeleteId(record.id)
-                        }
-                        } />
-                </Space>
-            )},
+                const { title, amount } = record
+                const category_id = record.category.id
+                return (
+                    <Space size="middle">
+                        <EditFilled style={{ color: "#0077ff" }}
+                            onClick={() => {
+                                showModal("edit")
+                                setForm({ title, amount, category_id })
+                                setUpdateId(record.id)
+                            }} />
+                        <DeleteFilled style={{ color: "#c90000" }}
+                            onClick={() => {
+                                showModal("delete")
+                                setDeleteId(record.id)
+                            }
+                            } />
+                    </Space>
+                )
+            },
         },
     ];
     const dispatch = useDispatch<any>()
     useEffect(() => {
-        dispatch(getRecords())
-        !categories.length && dispatch(getCategories())
-    }, [dispatch,categories])
+        dispatch(getRecords());
+        !categories.length && dispatch(getCategories());
+      }, [dispatch,categories.length]);
 
     const isFormValid = !(!form.title || form.amount === 0 || form.category_id === 0)
     return (<>
@@ -155,7 +156,7 @@ const Record = () => {
 
             </Modal>
         </div>
-        <Table loading={loading} columns={columns} dataSource={data} rowKey="id"/>
+        <Table loading={loading} columns={columns} dataSource={data} rowKey="id" />
     </>
 
     )

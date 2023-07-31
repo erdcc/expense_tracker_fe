@@ -1,7 +1,7 @@
-import { MessageInstance } from "antd/es/message/interface";
+import { message } from "antd";
 
-    const showError = (messageApi: MessageInstance,errorMessage: string) => {
-        messageApi.open({
+    const showError = (errorMessage: string) => {
+        message.open({
             type: 'error',
             content: errorMessage,
         });

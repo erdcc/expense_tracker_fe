@@ -1,11 +1,10 @@
-import { Button, Form, Input, message } from "antd"
+import { Button, Form, Input } from "antd"
 import Api from "../utils/Api";
 import { useNavigate } from "react-router-dom";
 import showError from "../utils/showError";
 
 
 const SignUp = () => {
-    const [messageApi, contextHolder] = message.useMessage();
 
     const layout = {
         labelCol: { span: 8 },
@@ -25,18 +24,17 @@ const SignUp = () => {
     const onFinish = async (values: any) => {
         try {
             console.log(values)
-            await Api.post("/users/register", values)
+            await Api().post("/users/register", values)
             navigate("/login", { state: { newSignUp: true } })
         }
         catch (error) {
             console.log(error)
-            showError(messageApi, (error as any).response.data.errorMessage)
+            showError((error as any).response.data.errorMessage)
         }
 
     };
     return (
-        <>
-            {contextHolder}
+        
             <Form
                 {...layout}
                 name="nest-messages"
@@ -72,7 +70,7 @@ const SignUp = () => {
                     </Button>
                 </Form.Item>
             </Form>
-        </>
+        
     )
 }
 

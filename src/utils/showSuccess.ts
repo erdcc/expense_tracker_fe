@@ -1,9 +1,9 @@
-import { MessageInstance } from "antd/es/message/interface";
+import { message } from "antd";
 
-const showSuccess = (messageApi: MessageInstance, message: string) => {
-    messageApi.open({
+const showSuccess = (successMessage: string) => {
+    message.open({
         type: 'success',
-        content: message,
+        content: successMessage,
     });
 };
 
