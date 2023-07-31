@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../store";
 import { useEffect } from "react";
 import { getRecords } from "../store/actions/recordAction";
-import { title } from "process";
 
 const HomePage = () => {
   const { data: recordData, loading } = useSelector((state: AppState) => state.records)
@@ -20,9 +19,8 @@ const HomePage = () => {
   })
   useEffect(() => { dispatch(getRecords()) }, [])
 
-  const configExpense = {
+  const config = {
     appendPadding: 10,
-    data: dataExpense,
     angleField: 'value',
     colorField: 'type',
     radius: 1,
@@ -54,40 +52,6 @@ const HomePage = () => {
         content: 'EXPENSE',
       },
     },
-  }; const configIncome = {
-    appendPadding: 10,
-    data: dataIncome,
-    angleField: 'value',
-    colorField: 'type',
-    radius: 1,
-    innerRadius: 0.6,
-    label: {
-      type: 'inner',
-      offset: '-50%',
-      content: '{value}',
-      style: {
-        textAlign: 'center',
-        fontSize: 14,
-      },
-    },
-    interactions: [
-      {
-        type: 'element-selected',
-      },
-      {
-        type: 'element-active',
-      },
-    ],
-    statistic: {
-      content: {
-        style: {
-          whiteSpace: 'pre-wrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        },
-        content: 'INCOME',
-      },
-    },
   };
   return (
 
@@ -96,8 +60,8 @@ const HomePage = () => {
       justifyContent: "space-around",
       marginBottom: "10px"
     }}>
-      <Pie {...configExpense} loading={loading} />
-      <Pie {...configIncome} loading={loading} /></div>
+      <Pie {...config} data={dataExpense} statistic={{content:{content:"EXPENSE"}}} loading={loading} />
+      <Pie {...config} data={dataIncome} statistic={{content:{content:"INCOME"}}}loading={loading} /></div>
 
   )
 }
