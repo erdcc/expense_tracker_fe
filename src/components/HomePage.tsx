@@ -29,6 +29,7 @@ const HomePage = () => {
       type: 'inner',
       offset: '-50%',
       content: '{value}',
+      autoRotate: false,
       style: {
         textAlign: 'center',
         fontSize: 14,
@@ -43,6 +44,11 @@ const HomePage = () => {
       },
     ],
     statistic: {
+      // title: {
+      //   offsetY: -4,
+      //   customHtml: <div>{"TOTAL"}</div>
+      // },
+
       content: {
         style: {
           whiteSpace: 'pre-wrap',
@@ -57,11 +63,11 @@ const HomePage = () => {
 
     <div style={{
       display: "flex",
-      justifyContent: "space-around",
+      justifyContent: "space-evenly",
       marginBottom: "10px"
     }}>
-      <Pie {...config} data={dataExpense.length?dataExpense:[{type:"", value:0}]} statistic={{content:{content:"EXPENSE"}}} loading={loading} />
-      <Pie {...config} data={dataIncome.length?dataIncome:[{type:"", value:0}]} statistic={{content:{content:"INCOME"}}}loading={loading} /></div>
+      <Pie {...config} data={dataExpense.length ? dataExpense : [{ type: "", value: 0 }]} statistic={{ content: { content: "EXPENSE" } }} loading={loading} />
+      <Pie {...config} data={dataIncome.length ? dataIncome : [{ type: "", value: 0 }]} statistic={{ content: { content: "INCOME" } }} loading={loading} /></div>
 
   )
 }
