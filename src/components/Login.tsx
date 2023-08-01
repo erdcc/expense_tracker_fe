@@ -23,7 +23,6 @@ const Login = () => {
 
     useEffect(() => {
         data.username && showSuccess("You have successfully logged in!")
-        console.log(data.username)
     }, [data.username])
 
     useEffect(() => {
@@ -34,50 +33,53 @@ const Login = () => {
     }, [data])
 
     return (
+        <div style={{
+            display: 'flex',
+            justifyContent: "center"
+        }}>
+            <Form
+                name="basic"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+                style={{ maxWidth: 600 }}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                autoComplete="off"
 
-        <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
-            autoComplete="off"
-        >
-            <h2 style={{ textAlign: "center", marginBottom: "40" }}>
-                Please Login
-            </h2>
-            {location.state?.newSignUp &&
-                <Result
-                    status="success"
-                    title="You successfully signed up!"
-                    subTitle="Please login using your credentials."
-                />}
-
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
             >
-                <Input />
-            </Form.Item>
+                <h2 style={{ textAlign: "center", marginBottom: "40" }}>
+                    Please Login
+                </h2>
+                {location.state?.newSignUp &&
+                    <Result
+                        status="success"
+                        title="You successfully signed up!"
+                        subTitle="Please login using your credentials."
+                    />}
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
+                <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
+                >
+                    <Input />
+                </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input.Password />
+                </Form.Item>
 
+                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
     )
 }
 

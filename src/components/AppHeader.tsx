@@ -25,6 +25,7 @@ const AppHeader = () => {
       <Menu
         theme="dark"
         mode="horizontal"
+        disabledOverflow={true}
         selectedKeys={[pathname]}
         items={
           data.username ? [

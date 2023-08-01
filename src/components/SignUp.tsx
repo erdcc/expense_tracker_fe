@@ -34,7 +34,10 @@ const SignUp = () => {
 
     };
     return (
-        
+        <div style={{
+            display: 'flex',
+            justifyContent: "center"
+        }}>
             <Form
                 {...layout}
                 name="nest-messages"
@@ -70,7 +73,7 @@ const SignUp = () => {
                     </Button>
                 </Form.Item>
             </Form>
-        
+        </div>
     )
 }
 

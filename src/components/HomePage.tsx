@@ -17,7 +17,8 @@ const HomePage = () => {
     const value = record.amount
     return ({ type, value })
   })
-  useEffect(() => { dispatch(getRecords()) }, [])
+  useEffect(() => { dispatch(getRecords()) }, [dispatch])
+  const token = localStorage.getItem("token");
 
   const config = {
     appendPadding: 10,
@@ -44,12 +45,7 @@ const HomePage = () => {
       },
     ],
     statistic: {
-      // title: {
-      //   offsetY: -4,
-      //   customHtml: <div>{"TOTAL"}</div>
-      // },
-
-      content: {
+     content: {
         style: {
           whiteSpace: 'pre-wrap',
           overflow: 'hidden',
@@ -63,11 +59,23 @@ const HomePage = () => {
 
     <div style={{
       display: "flex",
-      justifyContent: "space-evenly",
-      marginBottom: "10px"
+      justifyContent:"center",
+      marginBottom: "10px",
+      height:"70vh"
     }}>
-      <Pie {...config} data={dataExpense.length ? dataExpense : [{ type: "", value: 0 }]} statistic={{ content: { content: "EXPENSE" } }} loading={loading} />
-      <Pie {...config} data={dataIncome.length ? dataIncome : [{ type: "", value: 0 }]} statistic={{ content: { content: "INCOME" } }} loading={loading} /></div>
+      <Pie {...config}
+        data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
+        statistic={{ content: { content: "EXPENSE" } }}
+        loading={loading}
+      />
+      <Pie
+        {...config}
+        data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
+        statistic={{ content: { content: "INCOME" } }}
+        loading={loading}
+
+      />
+    </div>
 
   )
 }

@@ -13,7 +13,6 @@ const Logout = () => {
     }, [dispatch])
 
     if(!data.username) {
-        console.log("Logout: ",data.message)
         return <Navigate to="/login" />
     }
 
