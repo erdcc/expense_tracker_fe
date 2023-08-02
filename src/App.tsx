@@ -41,7 +41,6 @@ function App() {
               <Logout />
             </PrivateRoute>
           } />
-          {/* <Route path="/logout" element={<Logout />} /> */}
         </Routes>
       </Content>
       <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>

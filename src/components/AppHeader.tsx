@@ -62,6 +62,13 @@ const AppHeader = () => {
                   </Link>
                 ),
                 key: '/login',
+              },{
+                label: (
+                  <Link to="/register" >
+                    Register
+                  </Link>
+                ),
+                key: '/register',
               }]
 
         }
