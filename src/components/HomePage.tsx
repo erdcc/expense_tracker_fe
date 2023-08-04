@@ -20,6 +20,9 @@ const HomePage = () => {
   useEffect(() => { dispatch(getRecords()) }, [dispatch])
   const token = localStorage.getItem("token");
 
+  const sumIncome = dataIncome.reduce((total, item) => total + item.value, 0);
+  const sumExpense = dataExpense.reduce((total, item) => total + item.value, 0);
+
   const config = {
     appendPadding: 10,
     angleField: 'value',
@@ -45,22 +48,39 @@ const HomePage = () => {
       },
     ],
     statistic: {
-      content: {
+      title: {
         style: {
           whiteSpace: 'pre-wrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
+          fontSize: "32px",
+          fontWeight:"bold" 
         },
-        content: 'EXPENSE',
+        content: '',
+
+      },
+      content: {
+        style: {
+          whiteSpace: 'pre-wrap',
+          overflow: 'visible',
+          textOverflow: 'ellipsis',
+        },
+        content: "",
+
       },
     },
   };
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
       <div style={{ flex: '0 0 50%', maxWidth: '50%', padding: '10px' }}>
         <Pie {...config}
           data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
-          statistic={{ content: { content: "EXPENSE" } }}
+          statistic={{
+            ...config.statistic,
+            title: { ...config.statistic.title, content: "EXPENSE" },
+            content: { ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumExpense)}`
+            , style:{...config.statistic.content.style,color:"red"} }
+          }}
           loading={loading}
         />
       </div>
@@ -68,7 +88,13 @@ const HomePage = () => {
         <Pie
           {...config}
           data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
-          statistic={{ content: { content: "INCOME" } }}
+          statistic={{
+            ...config.statistic,
+            title: { ...config.statistic.title, content: "INCOME"},
+            content: { ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumIncome)}` 
+            , style:{...config.statistic.content.style,color:"green"}}
+          }}
+
           loading={loading}
         />
       </div>
