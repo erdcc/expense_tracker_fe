@@ -45,7 +45,7 @@ const HomePage = () => {
       },
     ],
     statistic: {
-     content: {
+      content: {
         style: {
           whiteSpace: 'pre-wrap',
           overflow: 'hidden',
@@ -56,27 +56,23 @@ const HomePage = () => {
     },
   };
   return (
-
-    <div style={{
-      display: "flex",
-      justifyContent:"center",
-      marginBottom: "10px",
-      height:"70vh"
-    }}>
-      <Pie {...config}
-        data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
-        statistic={{ content: { content: "EXPENSE" } }}
-        loading={loading}
-      />
-      <Pie
-        {...config}
-        data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
-        statistic={{ content: { content: "INCOME" } }}
-        loading={loading}
-
-      />
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ flex: '0 0 50%', maxWidth: '50%', padding: '10px' }}>
+        <Pie {...config}
+          data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
+          statistic={{ content: { content: "EXPENSE" } }}
+          loading={loading}
+        />
+      </div>
+      <div style={{ flex: '0 0 50%', maxWidth: '50%', padding: '10px' }}>
+        <Pie
+          {...config}
+          data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
+          statistic={{ content: { content: "INCOME" } }}
+          loading={loading}
+        />
+      </div>
     </div>
-
   )
 }
 

@@ -18,7 +18,7 @@ function App() {
 
   return (
 
-    <Layout className="layout" >
+    <Layout className="layout" style = {{height:"100vh"}} >
       <AppHeader />
       <Content className="site-layout" style={{ padding: '50px' }}>
 
@@ -43,7 +43,7 @@ function App() {
           } />
         </Routes>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Expense Tracker @erdcc</Footer>
+      <Footer style={{ textAlign: 'center' }}>Payment Track <a href="https://github.com/erdcc">@erdcc</a></Footer>
     </Layout>
 
   )
