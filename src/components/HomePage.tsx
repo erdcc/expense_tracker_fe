@@ -69,6 +69,7 @@ const HomePage = () => {
 
       },
     },
+     
   };
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
@@ -82,6 +83,7 @@ const HomePage = () => {
             , style:{...config.statistic.content.style,color:"red"} }
           }}
           loading={loading}
+          legend={false}
         />
       </div>
       <div style={{ flex: '0 0 50%', maxWidth: '50%', padding: '10px' }}>
@@ -94,8 +96,8 @@ const HomePage = () => {
             content: { ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumIncome)}` 
             , style:{...config.statistic.content.style,color:"green"}}
           }}
-
           loading={loading}
+          legend= {false}
         />
       </div>
     </div>
