@@ -7,18 +7,34 @@ import { getRecords } from "../store/actions/recordAction";
 const HomePage = () => {
   const { data: recordData, loading } = useSelector((state: AppState) => state.records)
   const dispatch = useDispatch<any>()
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth()
   const dataExpense = recordData.filter(record => record.category.type === "expense").map(record => {
     const type = record.title
     const value = record.amount
     return ({ type, value })
   })
-  const dataIncome = recordData.filter(record => record.category.type === "income").map(record => {
-    const type = record.title
-    const value = record.amount
-    return ({ type, value })
-  })
+  const dataIncome = recordData.filter(record => record.category.type === "income")
+    .filter(record => {
+      const recordMonth = new Date(record.createdAt).getMonth()
+      return recordMonth === currentMonth;
+    })
+    .map(record => {
+      const type = record.title
+      const value = record.amount
+      return ({ type, value })
+    })
   useEffect(() => { dispatch(getRecords()) }, [dispatch])
   const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const tokenExpiration = tokenData.exp * 1000;
+      if (Date.now() > tokenExpiration) {
+        localStorage.removeItem('token');
+      }
+    }
+  })
 
   const sumIncome = dataIncome.reduce((total, item) => total + item.value, 0);
   const sumExpense = dataExpense.reduce((total, item) => total + item.value, 0);
@@ -54,7 +70,7 @@ const HomePage = () => {
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           fontSize: "32px",
-          fontWeight:"bold" 
+          fontWeight: "bold"
         },
         content: '',
 
@@ -69,18 +85,21 @@ const HomePage = () => {
 
       },
     },
-     
+
   };
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
+      <div style={{ textAlign: "center", width: "100%", fontSize: 36, fontWeight:"bold" ,color:"#001aff"}}>{currentDate.toLocaleString('default', { month: 'long' }).toUpperCase()}</div>
       <div style={{ flex: '0 0 50%', maxWidth: '50%', padding: '10px' }}>
         <Pie {...config}
           data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
           statistic={{
             ...config.statistic,
             title: { ...config.statistic.title, content: "EXPENSE" },
-            content: { ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumExpense)}`
-            , style:{...config.statistic.content.style,color:"red"} }
+            content: {
+              ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumExpense)}`
+              , style: { ...config.statistic.content.style, color: "red" }
+            }
           }}
           loading={loading}
           legend={false}
@@ -92,12 +111,14 @@ const HomePage = () => {
           data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
           statistic={{
             ...config.statistic,
-            title: { ...config.statistic.title, content: "INCOME"},
-            content: { ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumIncome)}` 
-            , style:{...config.statistic.content.style,color:"green"}}
+            title: { ...config.statistic.title, content: "INCOME" },
+            content: {
+              ...config.statistic.content, content: `${Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(sumIncome)}`
+              , style: { ...config.statistic.content.style, color: "green" }
+            }
           }}
           loading={loading}
-          legend= {false}
+          legend={false}
         />
       </div>
     </div>

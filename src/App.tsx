@@ -8,6 +8,7 @@ import Record from "./components/Record";
 import AppHeader from "./components/AppHeader";
 import Logout from "./components/Logout";
 import HomePage from "./components/HomePage";
+//import backgroundImage from "../public/bg.jpg"
 
 const { Content, Footer } = Layout;
 
@@ -18,7 +19,13 @@ function App() {
 
   return (
 
-    <Layout className="layout" style = {{height:"100vh"}} >
+    <Layout className="layout" style={{
+      backgroundImage: `url(${process.env.PUBLIC_URL}/bg.jpg)`,
+      backgroundSize: '100% 100%',
+      backgroundRepeat: 'no-repeat',
+      minHeight: '100vh',
+    }}
+    >
       <AppHeader />
       <Content className="site-layout" style={{ padding: '50px' }}>
 
@@ -43,7 +50,7 @@ function App() {
           } />
         </Routes>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Payment Track <a href="https://github.com/erdcc">@erdcc</a></Footer>
+      <Footer className="site-layout" style={{ textAlign: 'center' }}>Payment Track <a href="https://github.com/erdcc">@erdcc</a></Footer>
     </Layout>
 
   )
