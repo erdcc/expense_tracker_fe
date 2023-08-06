@@ -6,30 +6,26 @@ import { getRecords } from "../store/actions/recordAction";
 import { DatePicker, DatePickerProps } from "antd";
 
 const HomePage = () => {
-  const { RangePicker } = DatePicker;
   const { data: recordData, loading } = useSelector((state: AppState) => state.records)
   const dispatch = useDispatch<any>()
 
   //data
-  const [selectedDate,setSelectedDate]=useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
-    setSelectedDate(date!.toDate())
+    setSelectedDate(date ? date.toDate() : new Date())
   };
-  const dataExpense = recordData.filter(record => record.category.type === "expense").map(record => {
-    const type = record.title
-    const value = record.amount
-    return ({ type, value })
-  })
-  const dataIncome = recordData.filter(record => record.category.type === "income")
-    .filter(record => {
-      const recordMonth = new Date(record.createdAt).getMonth()
-      return recordMonth === selectedDate.getMonth();
-    })
-    .map(record => {
-      const type = record.title
-      const value = record.amount
-      return ({ type, value })
-    })
+  const dataAmount = (type: "expense" | "income") => {
+    return recordData.filter(record => record.category.type === type)
+      .filter(record => {
+        const recordMonth = new Date(record.createdAt).getMonth()
+        return recordMonth === selectedDate.getMonth();
+      })
+      .map(record => {
+        const type = record.title
+        const value = record.amount
+        return ({ type, value })
+      })
+  }
   useEffect(() => { dispatch(getRecords()) }, [dispatch])
 
   //token
@@ -44,10 +40,10 @@ const HomePage = () => {
     }
   })
 
-  const sumIncome = dataIncome.reduce((total, item) => total + item.value, 0);
-  const sumExpense = dataExpense.reduce((total, item) => total + item.value, 0);
+  const sumIncome = dataAmount("income").reduce((total, item) => total + item.value, 0);
+  const sumExpense = dataAmount("expense").reduce((total, item) => total + item.value, 0);
 
-  
+
 
   const config = {
     appendPadding: 10,
@@ -66,8 +62,8 @@ const HomePage = () => {
       },
     },
     interactions: [
-      {type: 'element-selected',},
-      {type: 'element-active',},
+      { type: 'element-selected', },
+      { type: 'element-active', },
     ],
     statistic: {
       title: {
@@ -98,7 +94,7 @@ const HomePage = () => {
 
       <div style={{ flex: '0 0 50%', maxWidth: '40%', paddingTop: '10px' }}>
         <Pie {...config}
-          data={token && dataExpense.length ? dataExpense : [{ type: "", value: 0 }]}
+          data={token && dataAmount("expense") ? dataAmount("expense") : [{ type: "", value: 0 }]}
           statistic={{
             ...config.statistic,
             title: { ...config.statistic.title, content: "EXPENSE" },
@@ -112,17 +108,15 @@ const HomePage = () => {
         />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", maxWidth: '20%', textAlign: "center", paddingTop: "10px", justifyContent:"center" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxWidth: '20%', textAlign: "center", paddingTop: "10px", justifyContent: "center" }}>
         <p style={{ fontSize: 36, fontWeight: "bold", color: "#001aff" }}>{selectedDate.toLocaleString('default', { month: 'long' }).toUpperCase()}</p>
         <DatePicker onChange={onChangeDate} picker="month" size="large" format={"MM/YYYY"} />
-        <p style={{paddingTop:"10px"}}> OR </p>
-        <RangePicker size="large" format={"DD/MM/YYYY"}/>
       </div>
 
       <div style={{ flex: '0 0 50%', maxWidth: '40%', paddingTop: '10px' }}>
         <Pie
           {...config}
-          data={token && dataIncome.length ? dataIncome : [{ type: "", value: 0 }]}
+          data={token && dataAmount("income") ? dataAmount("income") : [{ type: "", value: 0 }]}
           statistic={{
             ...config.statistic,
             title: { ...config.statistic.title, content: "INCOME" },
