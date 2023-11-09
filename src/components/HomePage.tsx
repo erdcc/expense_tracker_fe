@@ -4,6 +4,7 @@ import { AppState } from "../store";
 import { useEffect, useState } from "react";
 import { getRecords } from "../store/actions/recordAction";
 import { DatePicker, DatePickerProps } from "antd";
+import MediaQuery from "react-responsive";
 
 const HomePage = () => {
   const { data: recordData, loading } = useSelector((state: AppState) => state.records)
@@ -89,9 +90,8 @@ const HomePage = () => {
     },
 
   };
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
-
+  const charts = () =>
+    <>
       <div style={{ flex: '0 0 50%', maxWidth: '40%', paddingTop: '10px' }}>
         <Pie {...config}
           data={token && dataAmount("expense") ? dataAmount("expense") : [{ type: "", value: 0 }]}
@@ -129,7 +129,23 @@ const HomePage = () => {
           legend={false}
         />
       </div>
-    </div>
+    </>
+
+
+  return (<>
+    <MediaQuery minWidth={1100}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
+        {charts()}
+      </div>
+
+    </MediaQuery>
+
+    <MediaQuery maxWidth={1099}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap", flexDirection: "column", alignItems: "center" }}>
+        {charts()}
+      </div>
+    </MediaQuery>
+  </>
   )
 }
 
