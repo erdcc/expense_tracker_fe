@@ -92,7 +92,6 @@ const HomePage = () => {
   };
   const charts = () =>
     <>
-      <div style={{ flex: '0 0 50%', maxWidth: '40%', paddingTop: '10px' }}>
         <Pie {...config}
           data={token && dataAmount("expense") ? dataAmount("expense") : [{ type: "", value: 0 }]}
           statistic={{
@@ -106,14 +105,10 @@ const HomePage = () => {
           loading={loading}
           legend={false}
         />
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", maxWidth: '20%', textAlign: "center", paddingTop: "10px", justifyContent: "center" }}>
-        <p style={{ fontSize: 36, fontWeight: "bold", color: "#001aff" }}>{selectedDate.toLocaleString('default', { month: 'long' }).toUpperCase()}</p>
+        <>
+        <p style={{alignSelf:"center", fontSize: 36, fontWeight: "bold", color: "#001aff" }}>{selectedDate.toLocaleString('default', { month: 'long' }).toUpperCase()}</p>
         <DatePicker onChange={onChangeDate} picker="month" size="large" format={"MM/YYYY"} />
-      </div>
-
-      <div style={{ flex: '0 0 50%', maxWidth: '40%', paddingTop: '10px' }}>
+        </>
         <Pie
           {...config}
           data={token && dataAmount("income") ? dataAmount("income") : [{ type: "", value: 0 }]}
@@ -128,7 +123,6 @@ const HomePage = () => {
           loading={loading}
           legend={false}
         />
-      </div>
     </>
 
 
@@ -141,7 +135,7 @@ const HomePage = () => {
     </MediaQuery>
 
     <MediaQuery maxWidth={1099}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap", flexDirection: "column", alignItems: "stretch"}}>
         {charts()}
       </div>
     </MediaQuery>

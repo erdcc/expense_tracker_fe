@@ -7,6 +7,7 @@ import { isLoggedIn } from "../store/actions/userActions"
 import { useLocation } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { HomeTwoTone } from "@ant-design/icons"
+import MediaQuery from "react-responsive"
 
 const AppHeader = () => {
   const { data, loading } = useSelector((state: AppState) => state.user)
@@ -25,7 +26,7 @@ const AppHeader = () => {
       <Menu
         theme="dark"
         mode="horizontal"
-        disabledOverflow={true}
+        disabledOverflow={false}
         selectedKeys={[pathname]}
         items={
           data.username ? [
