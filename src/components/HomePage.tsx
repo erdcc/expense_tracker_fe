@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../store";
 import { useEffect, useState } from "react";
 import { getRecords } from "../store/actions/recordAction";
-import { DatePicker, DatePickerProps } from "antd";
+import { DatePicker, DatePickerProps, Flex } from "antd";
 import MediaQuery from "react-responsive";
 
 const HomePage = () => {
@@ -90,9 +90,10 @@ const HomePage = () => {
     },
 
   };
-  const charts = () =>
-    <>
-        <Pie {...config}
+  const charts = (size:any) =>
+    <>  
+    <div style={{ width: size }}>
+        <Pie {...config} 
           data={token && dataAmount("expense") ? dataAmount("expense") : [{ type: "", value: 0 }]}
           statistic={{
             ...config.statistic,
@@ -105,10 +106,12 @@ const HomePage = () => {
           loading={loading}
           legend={false}
         />
-        <>
+        </div>
+        <div style={{display:"flex", flexDirection:"column"}}>
         <p style={{alignSelf:"center", fontSize: 36, fontWeight: "bold", color: "#001aff" }}>{selectedDate.toLocaleString('default', { month: 'long' }).toUpperCase()}</p>
         <DatePicker onChange={onChangeDate} picker="month" size="large" format={"MM/YYYY"} />
-        </>
+        </div>
+        <div style={{ width: size }}>
         <Pie
           {...config}
           data={token && dataAmount("income") ? dataAmount("income") : [{ type: "", value: 0 }]}
@@ -123,20 +126,21 @@ const HomePage = () => {
           loading={loading}
           legend={false}
         />
+        </div>
     </>
 
 
   return (<>
     <MediaQuery minWidth={1100}>
       <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap" }}>
-        {charts()}
+        {charts('40%')}
       </div>
 
     </MediaQuery>
 
     <MediaQuery maxWidth={1099}>
       <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: "wrap", flexDirection: "column", alignItems: "stretch"}}>
-        {charts()}
+        {charts('100%')}
       </div>
     </MediaQuery>
   </>
